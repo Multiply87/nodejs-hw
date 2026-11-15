@@ -1,13 +1,11 @@
 import createHttpError from 'http-errors';
 import { Note } from '../models/note.js';
 
-// Отримати список усіх нотаток
 export const getAllNotes = async (req, res) => {
   const notes = await Note.find();
   res.status(200).json(notes);
 };
 
-// Отримати одну нотатку за id
 export const getNoteById = async (req, res, next) => {
   const { noteId } = req.params;
   const note = await Note.findById(noteId);
