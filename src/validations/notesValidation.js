@@ -20,7 +20,7 @@ export const getAllNotesSchema = {
     page: Joi.number().integer().min(1).default(1),
     perPage: Joi.number().integer().min(5).max(20).default(10),
     tag: Joi.string().valid(...TAGS),
-    search: Joi.string().max(100).allow(''),
+    search: Joi.string().allow(''),
   }),
 };
 
@@ -34,7 +34,7 @@ export const createNoteSchema = {
 
 export const updateNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string(),
+    title: Joi.string().min(1),
     content: Joi.string(),
     tag: Joi.string().valid(...TAGS),
   }).min(1),
