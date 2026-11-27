@@ -85,7 +85,7 @@ export const refreshUserSession = async (req, res) => {
   });
 };
 
-export function logoutUser(req, res) {
+export async function logoutUser(req, res) {
   const { sessionId } = req.cookies;
 
   if (!sessionId) {
@@ -101,6 +101,6 @@ export function logoutUser(req, res) {
     })
     .catch((error) => {
       console.error('Error deleting session:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500);
     });
 }
