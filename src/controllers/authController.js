@@ -85,21 +85,16 @@ export const refreshUserSession = async (req, res) => {
   });
 };
 
-export async function logoutUser(req, res) {
+export const logoutUser = async (req, res) => {
   const { sessionId } = req.cookies;
 
-  if (!sessionId) {
-    throw createHttpError(401, 'Missing session credentials');
+  if (sessionId) {
+    await Session.deleteOne({ _id: sessionId });
   }
 
-  Session.deleteOne({ _id: sessionId })
-    .then(() => {
-      res.clearCookie('sessionId');
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
-      res.status(204);
-    })
-    .catch((error) => {
-      throw createHttpError(500, 'Error deleting session');
-    });
-}
+  res.clearCookie('sessionId');
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+
+  res.status(204).send();
+};
