@@ -97,10 +97,9 @@ export async function logoutUser(req, res) {
       res.clearCookie('sessionId');
       res.clearCookie('accessToken');
       res.clearCookie('refreshToken');
-      res.status(204).json({ message: 'Logged out successfully' });
+      res.status(204);
     })
     .catch((error) => {
-      console.error('Error deleting session:', error);
-      res.status(500);
+      throw createHttpError(500, 'Error deleting session');
     });
 }
